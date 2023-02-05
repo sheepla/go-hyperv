@@ -4,6 +4,8 @@ A Go module to get Microsoft Hyper-V VM informations and status via [WMI: Window
 
 ## Usage
 
+Get VM list:
+
 ```go
 package main
 
@@ -34,6 +36,10 @@ func main() {
 	}
 }
 ```
+
+<details>
+
+<summary>Output:</summary>
 
 ```
 ----------------------
@@ -67,6 +73,8 @@ EDF2EDF5-61A4-4AC2-8A2B-BDE67DE4FD12 WS2022Desktop [running]
         Uptime: 38991448
         vSwitch:        [ExternalSwitch]
 ```
+
+<details>
 
 ## Installation
 
