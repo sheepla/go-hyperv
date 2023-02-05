@@ -74,7 +74,7 @@ EDF2EDF5-61A4-4AC2-8A2B-BDE67DE4FD12 WS2022Desktop [running]
         vSwitch:        [ExternalSwitch]
 ```
 
-<details>
+</details>
 
 ## Installation
 
