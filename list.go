@@ -136,7 +136,7 @@ func GetVMList() (*VMList, error) {
 
 	q := vms.ToWMIQuery()
 	if err := wmi.QueryNamespace(q, &vms, hyperVNamespace); err != nil {
-		return nil, fmt.Errorf("failed to get VM list: %w\n\t- query:\t%s\n\t- namespace:\t%s", err, q, hyperVNamespace)
+		return nil, fmt.Errorf("%s: %w\n\t- query:\t%s\n\t- namespace:\t%s", ErrQuery, err, q, hyperVNamespace)
 	}
 
 	return &vms, nil
