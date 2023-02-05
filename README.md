@@ -78,8 +78,11 @@ EDF2EDF5-61A4-4AC2-8A2B-BDE67DE4FD12 WS2022Desktop [running]
 
 ## Installation
 
+This module only supports windows/amd64 with Hyper-V enabled. Please see Hyper-V system requirements:
+[Hyper-V System Requiments](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/reference/hyper-v-requirements)
+
 ```cmd
-go get github.com/sheepla/hyperv
+go get github.com/sheepla/hyperv@latest
 ```
 
 ## License
