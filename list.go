@@ -1,13 +1,23 @@
 package hyperv
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
 	"github.com/bi-zone/wmi"
+	windowssu "github.com/nyaosorg/go-windows-su"
 )
 
-const hypervNamespace = `root\virtualization\v2`
+const hyperVNamespace = `root\virtualization\v2`
+
+var (
+	ErrQuery             = errors.New("failed to query WMI interface")
+	ErrNotElevated       = errors.New("current process is not elevated, run it with administrator privileges")
+	ErrGetElevatedStatus = errors.New("failed to get current process elevation status")
+)
+
+type VMList []VM
 
 type VM struct {
 	ID                              string `wmi:"Name"`
@@ -52,6 +62,10 @@ type VM struct {
 	// AsynchronousTasks       CIM_ConcreteJob
 	// TestReplicaSystem        CIM_ComputerSystem
 	// Snapshots        CIM_VirtualSystemSettingData
+}
+
+func (vms *VMList) ToWMIQuery() string {
+	return wmi.CreateQueryFrom(vms, "Msvm_SummaryInformation", "")
 }
 
 type State uint16
@@ -109,12 +123,20 @@ func (s State) String() string {
 }
 
 // c.f. https://learn.microsoft.com/en-us/windows/win32/hyperv_v2/msvm-computersystem
-func GetVMList() (*[]VM, error) {
-	var vms []VM
+func GetVMList() (*VMList, error) {
+	var vms VMList
 
-	q := wmi.CreateQueryFrom(&vms, "Msvm_SummaryInformation", "")
-	if err := wmi.QueryNamespace(q, &vms, hypervNamespace); err != nil {
-		return nil, fmt.Errorf("failed to get VM list: %w\n\t- query:\t%s\n\t- namespace:\t%s", err, q, hypervNamespace)
+	elevated, err := windowssu.IsElevated()
+	if !elevated {
+		return nil, ErrNotElevated
+	}
+	if err != nil {
+		return nil, ErrGetElevatedStatus
+	}
+
+	q := vms.ToWMIQuery()
+	if err := wmi.QueryNamespace(q, &vms, hyperVNamespace); err != nil {
+		return nil, fmt.Errorf("failed to get VM list: %w\n\t- query:\t%s\n\t- namespace:\t%s", err, q, hyperVNamespace)
 	}
 
 	return &vms, nil
