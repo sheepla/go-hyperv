@@ -91,6 +91,10 @@ go get github.com/sheepla/hyperv@latest
 
 MIT
 
+## Contributing
+
+Welcome any bug fixing, typo fixing, advicements.
+
 ## Author
 
 [Sheepla](https://github.com/sheepla)
