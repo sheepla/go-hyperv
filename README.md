@@ -4,7 +4,7 @@ A Go module to get Microsoft Hyper-V VM informations and status via [WMI: Window
 
 ## Usage
 
-Get VM list:
+To get virtual machines summary informations and status, just call `GetVMList()`.
 
 ```go
 package main
@@ -81,4 +81,12 @@ EDF2EDF5-61A4-4AC2-8A2B-BDE67DE4FD12 WS2022Desktop [running]
 ```cmd
 go get github.com/sheepla/hyperv
 ```
+
+## License
+
+MIT
+
+## Author
+
+[Sheepla](https://github.com/sheepla)
 
